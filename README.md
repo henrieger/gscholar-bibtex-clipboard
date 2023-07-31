@@ -11,7 +11,7 @@ Add the [Tampermokey](https://www.tampermonkey.net/) extension to your browser:
 - [Safari](https://apps.apple.com/us/app/tampermonkey/id1482490089);
 - [Opera Next](https://addons.opera.com/en/extensions/details/tampermonkey-beta/).
 
-Click [this link](raw/main/gscholar-bibtex-clipboard.user.js) to install the script. A new tab should open asking for permission to install.]
+Click [this link](../../raw/main/gscholar-bibtex-clipboard.user.js) to install the script. A new tab should open asking for permission to install.]
 
 That's it!
 
