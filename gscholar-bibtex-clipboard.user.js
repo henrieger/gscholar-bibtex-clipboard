@@ -21,74 +21,71 @@
 // https://github.com/monperrus/misc/raw/master/direct-bibtex-in-google-scholar.user.js
 
 var $ = window.jQuery;
+
 function main() {
-  let url = new URL(window.location.href);
-  let favs = url.searchParams.get("scilib") !== null;
-  let authuser = url.searchParams.get("authuser");
-  console.log(favs, authuser);
+  const url = new URL(window.location.href);
+  const isFavsPage = url.searchParams.has("scilib");
+  const authuser = url.searchParams.get("authuser");
 
-  // for each result of google scholar
-  $(".gs_r").each(
-    function (index, result) {
-      // getting the paper title
-      var text = $(result).find(".gs_rt").text();
+  // For each result of Google Scholar
+  $(".gs_r").each((index, result) => {
+    // Getting the paper title
+    const text = $(result).find(".gs_rt").text();
 
-      // where to add the data: add the end of the menu which is under each entry
-      var whereList = $(result).find(".gs_fl");
-      var where = $(whereList.get(whereList.length - 1));
+    // Where to add the data: add it at the end of the menu which is under each entry
+    const whereList = $(result).find(".gs_fl");
+    const where = $(whereList.get(whereList.length - 1));
 
-      // we create a DIV object to contain the bibtex data
-      var container = $("<pre/>");
-      where.after(container);
+    // Create a DIV element to contain the BibTeX data
+    const container = $("<pre/>");
+    where.after(container);
 
-      // adding a link to trigger the bibtex download
-      var noteLink = $('<a href="javascript:void(0)">BibTeX</a>');
-      noteLink.click(function () {
-        var elem = $(result).find("a.gs_nph").get(0); // .contains('Cite')
+    // Adding a link to trigger the BibTeX download
+    const noteLink = $('<a href="javascript:void(0)">BibTeX</a>');
+    noteLink.click(() => {
+      const elem = $(result).find("a.gs_nph").get(0);
 
-        // find the IDs needed for the request
-        var aid = $(result).attr("data-aid");
-        var cid = $(result).attr("data-cid");
-        console.log("aid: " + aid);
-        console.log("cid: " + cid);
+      // Find the IDs needed for the request
+      const articleId = $(result).attr("data-aid");
+      const citationId = $(result).attr("data-cid");
 
-        // we build the first URL based on the current context
-        var url;
-        if (favs) {
-          url = "https://scholar.google.com/scholar?scila=" + cid +
-            "&output=cite";
-        } else {
-          url = "https://scholar.google.com/scholar?q=info:" + aid +
-            ":scholar.google.com/&output=cite";
-        }
-        if (authuser != null) {
-          url += "&authuser=" + authuser;
-        }
-        console.log("url: " + url);
+      // Build the URL based on the current context
+      let url;
+      if (isFavsPage) {
+        url = "https://scholar.google.com/scholar?scila=" + citationId +
+          "&output=cite";
+      } else {
+        url = "https://scholar.google.com/scholar?q=info:" + articleId +
+          ":scholar.google.com/&output=cite";
+      }
 
-        $.ajax({ "url": url })
-          .done(function (data) {
-            // the final url, hosted on googleusercontent.com
-            // so there is a need for a cross-domain call
-            var url2 = $(data).find(".gs_citi").attr("href");
-            // calling the URL with the BibTeX content
-            GM_xmlhttpRequest({
-              method: "GET",
-              url: url2,
-              onload: function (responseDetails) {
-                // This variable will be used more than once in the future
-                var bibtex = responseDetails.responseText;
-                container.text("-- Copied BibTeX to clipboard! --\n");
-                GM_setClipboard(bibtex.replace(/\n/g, " "));
-              },
-            });
+      // Add user param to URL if needed
+      if (authuser != null) {
+        url += "&authuser=" + authuser;
+      }
+
+      $.ajax({ "url": url })
+        .done((data) => {
+          // The final URL, hosted on googleusercontent.com
+          // So there is a need for a cross-domain call
+          const citationUrl = $(data).find(".gs_citi").attr("href");
+
+          // Calling the URL with the BibTeX content
+          GM_xmlhttpRequest({
+            method: "GET",
+            url: citationUrl,
+            onload: function (responseDetails) {
+              const bibtex = responseDetails.responseText;
+              container.text("-- Copied BibTeX to clipboard! --\n");
+              GM_setClipboard(bibtex.replace(/\n/g, " "));
+            },
           });
-      });
+        });
+    });
 
-      // append button to menu
-      where.append(noteLink);
-    },
-  );
+    // Append the button to the menu
+    where.append(noteLink);
+  });
 }
 
 main();
