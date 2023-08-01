@@ -40,6 +40,14 @@ function main() {
     const container = $("<pre/>");
     where.after(container);
 
+    // Create the code block for BibTeX
+    const codeContainer = $(
+      '<div style="background-color: #EEEEEE; border-radius: 5px; padding: 0 10px 0 10px; border-color: darkgray; border-style: solid; border-width:1px;"/>',
+    );
+    const code = $(
+      '<pre style="white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;"/>',
+    );
+    codeContainer.append(code);
     // Adding a link to trigger the BibTeX download
     const noteLink = $('<a href="javascript:void(0)">BibTeX</a>');
     noteLink.click(() => {
@@ -76,6 +84,8 @@ function main() {
             url: citationUrl,
             onload: function (responseDetails) {
               const bibtex = responseDetails.responseText;
+              code.text(bibtex);
+              container.after(codeContainer);
               container.text("-- Copied BibTeX to clipboard! --\n");
               GM_setClipboard(bibtex.replace(/\n/g, " "));
             },
