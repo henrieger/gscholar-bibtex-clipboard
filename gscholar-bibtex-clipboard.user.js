@@ -49,18 +49,16 @@ function main() {
         // find the IDs needed for the request
         var aid = $(result).attr("data-aid");
         var cid = $(result).attr("data-cid");
-        var uid = aid.split(":")[0];
         console.log("aid: " + aid);
         console.log("cid: " + cid);
-        console.log("uid: " + uid);
 
         // we build the first URL based on the current context
         var url;
         if (favs) {
-          url = "https://scholar.google.com/scholar?scila=" + aid +
+          url = "https://scholar.google.com/scholar?scila=" + cid +
             "&output=cite";
         } else {
-          url = "https://scholar.google.com/scholar?q=info:" + cid +
+          url = "https://scholar.google.com/scholar?q=info:" + aid +
             ":scholar.google.com/&output=cite";
         }
         if (authuser != null) {
