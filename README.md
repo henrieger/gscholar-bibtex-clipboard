@@ -1,6 +1,6 @@
 # Google Scholar - BibTeX to Clipboard
 
-Adds a new button to your Google Scholar pages to directly add the BibTeX references to your clipboard
+Adds a new button to your Google Scholar pages to directly add the BibTeX references to your clipboard.
 
 ## Usage
 
@@ -11,8 +11,10 @@ Add the [Tampermokey](https://www.tampermonkey.net/) extension to your browser:
 - [Safari](https://apps.apple.com/us/app/tampermonkey/id1482490089);
 - [Opera Next](https://addons.opera.com/en/extensions/details/tampermonkey-beta/).
 
-Click [this link](../../raw/main/gscholar-bibtex-clipboard.user.js) to install the script. A new tab should open asking for permission to install.]
+Click [this link](../../raw/main/gscholar-bibtex-clipboard.user.js) to install the script. A new tab should open asking for permission to install.
 
-That's it!
+**That's it!**
 
-The first time you use it, Tampermonkey will ask for permission to use the script. Choose the option that suits you better, however. the "Always allow domain" option is prefered for a smooth experience. This will add the "googleusercontent.com" domain to the scripts whitelist.
+A new link with the text "BibTeX" will appear under each reference of your Google Scholar searches. Click it to copy the BibTeX to your clipboard.  
+
+The first time you click on a "BibTex" link, Tampermonkey will ask for permission to use the script. Choose the option that suits you better, however, the "Always allow domain" option is prefered for a smooth experience. This will add the "googleusercontent.com" domain to the script's whitelist.
