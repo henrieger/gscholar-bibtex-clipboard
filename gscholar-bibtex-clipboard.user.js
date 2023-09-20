@@ -7,7 +7,7 @@
 // @author        Martin Monperrus <martin.monperrus@gnieh.org>
 // @author        Nicolas Harrand <harrand@kth.se>
 // @license       MIT
-// @version       0.3
+// @version       0.4
 // @match         https://scholar.google.com/*
 // @match         https://scholar.google.fr/*
 // @match         https://scholar.google.se/*
